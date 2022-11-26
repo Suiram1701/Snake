@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Resources;
 
 namespace Snake
 {
@@ -37,6 +38,7 @@ namespace Snake
                 Controls.Clear();
 
                 #region Menu
+                System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
                 this.Con = new System.Windows.Forms.Button();
                 this.Res = new System.Windows.Forms.Button();
                 this.exit = new System.Windows.Forms.Button();
@@ -110,6 +112,7 @@ namespace Snake
                 // 
                 // GUI
                 // 
+                resources.ApplyResources(this, "$this");
                 this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                 this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
                 this.BackColor = System.Drawing.Color.CadetBlue;
@@ -163,7 +166,7 @@ namespace Snake
         /// </summary>
         private void InitializeComponent()
         {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(GUI));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
             this.field = new System.Windows.Forms.TableLayoutPanel();
             this.panel100 = new System.Windows.Forms.Panel();
             this.panel99 = new System.Windows.Forms.Panel();

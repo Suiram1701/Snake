@@ -7,7 +7,7 @@
     <ProjectGuid>{7E0E4431-B0FA-48D2-968A-0FBE421487B5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Snake</RootNamespace>
-    <AssemblyName>Snake CS</AssemblyName>
+    <AssemblyName>Snake Win</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
