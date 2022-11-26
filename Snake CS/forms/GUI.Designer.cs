@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Snake.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace Snake
 {
@@ -22,13 +24,6 @@ namespace Snake
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-        private delegate void Cl();
-        private void Clear()
-        {
-            Controls.Clear();
         }
 
         /// <summary>
@@ -135,6 +130,16 @@ namespace Snake
                 this.ResumeLayout(false);
                 this.PerformLayout();
                 #endregion
+
+                // lädt / setzt high score                
+                cscore.Text = $"You have {score} points!";
+
+                if (score > Settings.Default.hscore)
+                {
+                    Settings.Default.hscore = score;
+                    Settings.Default.Save();
+                }
+                hscore.Text = $"Programm highscore is {Settings.Default.hscore} points!";
             }
             else
             {
@@ -158,7 +163,7 @@ namespace Snake
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(GUI));
             this.field = new System.Windows.Forms.TableLayoutPanel();
             this.panel100 = new System.Windows.Forms.Panel();
             this.panel99 = new System.Windows.Forms.Panel();
