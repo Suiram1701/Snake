@@ -23,6 +23,119 @@ namespace Snake
             base.Dispose(disposing);
         }
 
+        private void LoadMenu(bool load)
+        {
+            if (load)
+            {
+                Controls.Clear();
+
+                #region Menu
+                this.Con = new System.Windows.Forms.Button();
+                this.Res = new System.Windows.Forms.Button();
+                this.exit = new System.Windows.Forms.Button();
+                this.cscore = new System.Windows.Forms.Label();
+                this.label2 = new System.Windows.Forms.Label();
+                this.hscore = new System.Windows.Forms.Label();
+                this.SuspendLayout();
+                // 
+                // Con
+                // 
+                this.Con.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.Con.Location = new System.Drawing.Point(299, 181);
+                this.Con.Name = "Con";
+                this.Con.Size = new System.Drawing.Size(75, 35);
+                this.Con.TabIndex = 0;
+                this.Con.Text = "Continue";
+                this.Con.UseVisualStyleBackColor = true;
+                this.Con.Click += Continue_Click;
+                // 
+                // Res
+                // 
+                this.Res.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.Res.Location = new System.Drawing.Point(299, 222);
+                this.Res.Name = "Res";
+                this.Res.Size = new System.Drawing.Size(75, 35);
+                this.Res.TabIndex = 1;
+                this.Res.Text = "Restart";
+                this.Res.UseVisualStyleBackColor = true;
+                // 
+                // exit
+                // 
+                this.exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.exit.Location = new System.Drawing.Point(299, 263);
+                this.exit.Name = "exit";
+                this.exit.Size = new System.Drawing.Size(75, 35);
+                this.exit.TabIndex = 2;
+                this.exit.Text = "Exit";
+                this.exit.UseVisualStyleBackColor = true;
+                this.exit.Click += Exit_Click;
+                // 
+                // score
+                // 
+                this.cscore.AutoSize = true;
+                this.cscore.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.cscore.Location = new System.Drawing.Point(271, 138);
+                this.cscore.Name = "score";
+                this.cscore.Size = new System.Drawing.Size(140, 20);
+                this.cscore.TabIndex = 3;
+                this.cscore.Text = "You have 0 points!";
+                // 
+                // label2
+                // 
+                this.label2.AutoSize = true;
+                this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.label2.Location = new System.Drawing.Point(293, 96);
+                this.label2.Name = "label2";
+                this.label2.Size = new System.Drawing.Size(91, 33);
+                this.label2.TabIndex = 4;
+                this.label2.Text = "Menu";
+                // 
+                // hscore
+                // 
+                this.hscore.AutoSize = true;
+                this.hscore.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.hscore.Location = new System.Drawing.Point(227, 158);
+                this.hscore.Name = "hscore";
+                this.hscore.Size = new System.Drawing.Size(234, 20);
+                this.hscore.TabIndex = 5;
+                this.hscore.Text = "Programm highscore is 0 points!";
+                // 
+                // GUI
+                // 
+                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+                this.BackColor = System.Drawing.Color.CadetBlue;
+                this.ClientSize = new System.Drawing.Size(644, 649);
+                this.Controls.Add(this.hscore);
+                this.Controls.Add(this.label2);
+                this.Controls.Add(this.cscore);
+                this.Controls.Add(this.exit);
+                this.Controls.Add(this.Res);
+                this.Controls.Add(this.Con);
+                this.MaximizeBox = false;
+                this.MaximumSize = new System.Drawing.Size(660, 688);
+                this.MinimumSize = new System.Drawing.Size(660, 688);
+                this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GUI_KeyDown);
+                this.Name = "GUI";
+                this.Text = "Snake";
+                this.ResumeLayout(false);
+                this.PerformLayout();
+                #endregion
+            }
+            else
+            {
+                Controls.Clear();
+                InitializeComponent();
+            }
+        }
+
+        private System.Windows.Forms.Button Con;
+        private System.Windows.Forms.Button Res;
+        private System.Windows.Forms.Button exit;
+        private System.Windows.Forms.Label cscore;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label hscore;
+
         #region Vom Windows Form-Designer generierter Code
 
         /// <summary>

@@ -20,10 +20,31 @@ namespace Snake
         public GUI()
         {
             // init Grafik
-            InitializeComponent();
+            LoadMenu(true);
 
             // Loop
             Loop();
+        }
+
+        /// <summary>
+        /// Schlißt das Programm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        /// <summary>
+        /// Setz das Spiel fort
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Continue_Click(object sender, EventArgs e)
+        {
+            LoadMenu(false);
+            menu = false;
         }
 
         /// <summary>
@@ -71,6 +92,13 @@ namespace Snake
         {
             switch (e.KeyValue)
             {
+                case 27:
+                    if (!menu)
+                    {
+                        LoadMenu(true);
+                        menu = true;
+                    }
+                    break;
                 case 38:
                     dir = Dir.Top;
                     break;
