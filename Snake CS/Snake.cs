@@ -77,7 +77,8 @@ namespace Snake
                 foodPos[0] = Rnd.Next(0, 9);
                 foodPos[1] = Rnd.Next(0, 9);
 
-                MoveTo(foodPos[0], foodPos[1], Type.Food);
+                try { MoveTo(foodPos[0], foodPos[1], Type.Food); }
+                catch (ArgumentOutOfRangeException) { Reset(); }
                 foodExist = true;
             }
         }
@@ -124,15 +125,7 @@ namespace Snake
                     pos[0][0]--;
                     break;
             }
-            try
-            {
-                MoveTo(pos[0][0], pos[0][1], Type.Head);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                MessageBox.Show($"Ihr Punktestand ist {score} Punkte!");
-                Reset();
-            }
+            MoveTo(pos[0][0], pos[0][1], Type.Head);
         }
 
         /// <summary>
@@ -140,6 +133,14 @@ namespace Snake
         /// </summary>
         private void Collide()
         {
+            for (int i = 1; i < pos.Length - 1; i++)
+            {
+                if (pos[0][0] == pos[i][0] && pos[0][1] == pos[i][1])
+                {
+                    Reset();
+                }
+            }
+
             if (pos[0][0] == foodPos[0] && pos[0][1] == foodPos[1])
             {
                 score++;
@@ -155,7 +156,17 @@ namespace Snake
         /// </summary>
         public void Reset()
         {
-
+            menu = true;
+            Invoke(new Action(() =>
+            {
+                LoadMenu(true);
+            }));
+            score = 0;
+            dir = Dir.None;
+            Array.Resize(ref pos, 0);
+            Array.Resize(ref pos, 2);
+            pos[0] = new int[2] { 5, 5 };
+            pos[1] = new int[2] { 5, 6 };
         }
     }
 }

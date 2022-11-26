@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Snake
@@ -23,6 +24,17 @@ namespace Snake
             base.Dispose(disposing);
         }
 
+
+        private delegate void Cl();
+        private void Clear()
+        {
+            Controls.Clear();
+        }
+
+        /// <summary>
+        /// Lädt das Haptmenü
+        /// </summary>
+        /// <param name="load">Menü oder Spiel laden</param>
         private void LoadMenu(bool load)
         {
             if (load)
@@ -58,6 +70,7 @@ namespace Snake
                 this.Res.TabIndex = 1;
                 this.Res.Text = "Restart";
                 this.Res.UseVisualStyleBackColor = true;
+                this.Res.Click += Restart_Click;
                 // 
                 // exit
                 // 
@@ -70,7 +83,7 @@ namespace Snake
                 this.exit.UseVisualStyleBackColor = true;
                 this.exit.Click += Exit_Click;
                 // 
-                // score
+                // cscore
                 // 
                 this.cscore.AutoSize = true;
                 this.cscore.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -78,7 +91,7 @@ namespace Snake
                 this.cscore.Name = "score";
                 this.cscore.Size = new System.Drawing.Size(140, 20);
                 this.cscore.TabIndex = 3;
-                this.cscore.Text = "You have 0 points!";
+                this.cscore.Text = $"You have {score} points!";
                 // 
                 // label2
                 // 
@@ -113,6 +126,7 @@ namespace Snake
                 this.Controls.Add(this.Res);
                 this.Controls.Add(this.Con);
                 this.MaximizeBox = false;
+                this.MinimizeBox = false;
                 this.MaximumSize = new System.Drawing.Size(660, 688);
                 this.MinimumSize = new System.Drawing.Size(660, 688);
                 this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GUI_KeyDown);

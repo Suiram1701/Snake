@@ -36,6 +36,12 @@ namespace Snake
             Application.Exit();
         }
 
+        private void Restart_Click(object sender, EventArgs e)
+        {
+            score = 0;
+            Reset();
+        }
+
         /// <summary>
         /// Setz das Spiel fort
         /// </summary>
@@ -59,14 +65,15 @@ namespace Snake
             // Wenn der Index außerhalb des bereichs liegt
             if (x > 9 || x < 0 || y > 9 || y < 0)
             {
-                throw new ArgumentOutOfRangeException();
+                Reset();
+                return;
             }
 
             // Feld Typ wird gesetzt
             switch (type)
             {
                 case Type.None:
-                    field.GetControlFromPosition(x, y).BackColor = Color.White;
+                    field.GetControlFromPosition(x, y).BackColor = Color.Snow;
                     break;
                 case Type.Block:
                     field.GetControlFromPosition(x, x).BackColor = Color.Green;
