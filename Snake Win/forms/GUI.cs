@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.ComponentModel;
+using Snake.recources;
 
 namespace Snake
 {
@@ -51,7 +53,6 @@ namespace Snake
         /// <param name="x">X Koordinate</param>
         /// <param name="y">Y Koordinate</param>
         /// <param name="type"></param>
-        /// <exception cref="ArgumentOutOfRangeException">Beide angegebenen Werte müssen zwischen 0 und 9 liegen.</exception>
         private void MoveTo(int x, int y, Type type)
         {
             // Wenn der Index außerhalb des bereichs liegt
@@ -65,19 +66,48 @@ namespace Snake
             switch (type)
             {
                 case Type.None:
+                    field.GetControlFromPosition(x, y).BackgroundImage = null;
                     field.GetControlFromPosition(x, y).BackColor = Color.Snow;
                     break;
                 case Type.Block:
+                    field.GetControlFromPosition(x, y).BackgroundImage = null;
                     field.GetControlFromPosition(x, x).BackColor = Color.Green;
                     break;
                 case Type.Food:
+                    field.GetControlFromPosition(x, y).BackgroundImage = null;
                     field.GetControlFromPosition(x, y).BackColor = Color.Yellow;
                     break;
                 case Type.Part:
+                    field.GetControlFromPosition(x, y).BackgroundImage = null;
                     field.GetControlFromPosition(x, y).BackColor = Color.Black;
                     break;
                 case Type.Head:
-                    field.GetControlFromPosition(x, y).BackColor = Color.Red;
+                    field.GetControlFromPosition(x, y).BackColor = Color.Snow;
+
+                    ComponentResourceManager head = new ComponentResourceManager(typeof(Heads));
+                    switch (dir)
+                    {
+                        case Dir.Top:
+                            field.GetControlFromPosition(x, y).BackgroundImage = (Bitmap)head.GetObject("HTop");
+                            field.GetControlFromPosition(x, y).BackColor = Color.Snow;
+                            break;
+                        case Dir.Right:
+                            field.GetControlFromPosition(x, y).BackgroundImage = (Bitmap)head.GetObject("HRight");
+                            field.GetControlFromPosition(x, y).BackColor = Color.Snow;
+                            break;
+                        case Dir.Bottom:
+                            field.GetControlFromPosition(x, y).BackgroundImage = (Bitmap)head.GetObject("HBottom");
+                            field.GetControlFromPosition(x, y).BackColor = Color.Snow;
+                            break;
+                        case Dir.Left:
+                            field.GetControlFromPosition(x, y).BackgroundImage = (Bitmap)head.GetObject("HLeft");
+                            field.GetControlFromPosition(x, y).BackColor = Color.Snow;
+                            break;
+                        default:
+                            field.GetControlFromPosition(x, y).BackgroundImage = null;
+                            field.GetControlFromPosition(x, y).BackColor = Color.Red;
+                            break;
+                    }
                     break;
             }
         }
