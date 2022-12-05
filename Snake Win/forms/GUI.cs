@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 using Snake.recources;
+using System.Diagnostics;
 
 namespace Snake
 {
@@ -30,6 +31,11 @@ namespace Snake
             Application.Exit();
         }
 
+        /// <summary>
+        /// Game Restart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Restart_Click(object sender, EventArgs e)
         {
             score = 0;
@@ -43,8 +49,8 @@ namespace Snake
         /// <param name="e"></param>
         private void Continue_Click(object sender, EventArgs e)
         {
-            LoadMenu(false);
             menu = false;
+            LoadMenu(menu);
         }
 
         /// <summary>
@@ -129,18 +135,54 @@ namespace Snake
                     }
                     break;
                 case 38:
+                    if (dir == Dir.Bottom)
+                    {
+                        break;
+                    }
                     dir = Dir.Top;
                     break;
                 case 39:
+                    if (dir == Dir.Left)
+                    {
+                        break;
+                    }
                     dir = Dir.Right;
                     break;
                 case 40:
+                    if (dir == Dir.Top)
+                    {
+                        break;
+                    }
                     dir = Dir.Bottom;
                     break;
                 case 37:
+                    if (dir == Dir.Right)
+                    {
+                        break;
+                    }
                     dir = Dir.Left;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Change game mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ModeChange_Click(object sender, EventArgs e)
+        {
+            var btn = sender as RadioButton;
+            if ((btn.Name == "normal" && isNormal) || (btn.Name == "blocky" && !isNormal)) return;
+            isNormal = btn.Name == "normal" ? true : false;
+
+            score = 0;
+            cscore.Text = $"Your current score is {score} points!";
+            dir = Dir.None;
+            Array.Resize(ref pos, 0);
+            Array.Resize(ref pos, 2);
+            pos[0] = new int[2] { 5, 5 };
+            pos[1] = new int[2] { 5, 6 };
         }
     }
 }

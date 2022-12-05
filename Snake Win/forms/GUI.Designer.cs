@@ -35,7 +35,7 @@ namespace Snake
         {
             if (load)
             {
-                Controls.Clear();
+                this.Controls.Clear();
 
                 #region Menu
                 System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
@@ -45,12 +45,14 @@ namespace Snake
                 this.cscore = new System.Windows.Forms.Label();
                 this.label2 = new System.Windows.Forms.Label();
                 this.hscore = new System.Windows.Forms.Label();
+                this.normal = new System.Windows.Forms.RadioButton();
+                this.blocky = new System.Windows.Forms.RadioButton();
                 this.SuspendLayout();
                 // 
                 // Con
                 // 
                 this.Con.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.Con.Location = new System.Drawing.Point(299, 181);
+                this.Con.Location = new System.Drawing.Point(299, 261);
                 this.Con.Name = "Con";
                 this.Con.Size = new System.Drawing.Size(75, 35);
                 this.Con.TabIndex = 0;
@@ -61,7 +63,7 @@ namespace Snake
                 // Res
                 // 
                 this.Res.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.Res.Location = new System.Drawing.Point(299, 222);
+                this.Res.Location = new System.Drawing.Point(299, 302);
                 this.Res.Name = "Res";
                 this.Res.Size = new System.Drawing.Size(75, 35);
                 this.Res.TabIndex = 1;
@@ -72,7 +74,7 @@ namespace Snake
                 // exit
                 // 
                 this.exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.exit.Location = new System.Drawing.Point(299, 263);
+                this.exit.Location = new System.Drawing.Point(299, 343);
                 this.exit.Name = "exit";
                 this.exit.Size = new System.Drawing.Size(75, 35);
                 this.exit.TabIndex = 2;
@@ -84,11 +86,11 @@ namespace Snake
                 // 
                 this.cscore.AutoSize = true;
                 this.cscore.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.cscore.Location = new System.Drawing.Point(271, 138);
-                this.cscore.Name = "score";
-                this.cscore.Size = new System.Drawing.Size(140, 20);
+                this.cscore.Location = new System.Drawing.Point(271, 150);
+                this.cscore.Name = "cscore";
+                this.cscore.Size = new System.Drawing.Size(0, 20);
                 this.cscore.TabIndex = 3;
-                this.cscore.Text = $"You have {score} points!";
+                this.cscore.Text = $"Your current score is {score} points!";
                 // 
                 // label2
                 // 
@@ -104,11 +106,39 @@ namespace Snake
                 // 
                 this.hscore.AutoSize = true;
                 this.hscore.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.hscore.Location = new System.Drawing.Point(227, 158);
+                this.hscore.Location = new System.Drawing.Point(227, 170);
                 this.hscore.Name = "hscore";
                 this.hscore.Size = new System.Drawing.Size(234, 20);
                 this.hscore.TabIndex = 5;
-                this.hscore.Text = "Programm highscore is 0 points!";
+                this.hscore.Text = $"Programm highscore is {Settings.Default.hscore} points!";
+                // 
+                // normal
+                // 
+                this.normal.AutoSize = true;
+                this.normal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.normal.Location = new System.Drawing.Point(277, 201);
+                this.normal.Name = "normal";
+                this.normal.Size = new System.Drawing.Size(121, 24);
+                this.normal.TabIndex = 6;
+                this.normal.TabStop = true;
+                this.normal.Text = "Normal mode";
+                this.normal.UseVisualStyleBackColor = true;
+                this.normal.Click += ModeChange_Click;
+                if (isNormal) this.normal.Checked = true;
+                // 
+                // blocky
+                // 
+                this.blocky.AutoSize = true;
+                this.blocky.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.blocky.Location = new System.Drawing.Point(277, 220);
+                this.blocky.Name = "blocky";
+                this.blocky.Size = new System.Drawing.Size(117, 24);
+                this.blocky.TabIndex = 7;
+                this.blocky.TabStop = true;
+                this.blocky.Text = "Blocky mode";
+                this.blocky.UseVisualStyleBackColor = true;
+                this.blocky.Click += ModeChange_Click;
+                if (!isNormal) this.blocky.Checked = true;
                 // 
                 // GUI
                 // 
@@ -117,6 +147,8 @@ namespace Snake
                 this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
                 this.BackColor = System.Drawing.Color.CadetBlue;
                 this.ClientSize = new System.Drawing.Size(644, 649);
+                this.Controls.Add(this.blocky);
+                this.Controls.Add(this.normal);
                 this.Controls.Add(this.hscore);
                 this.Controls.Add(this.label2);
                 this.Controls.Add(this.cscore);
@@ -124,10 +156,9 @@ namespace Snake
                 this.Controls.Add(this.Res);
                 this.Controls.Add(this.Con);
                 this.MaximizeBox = false;
-                this.MinimizeBox = false;
                 this.MaximumSize = new System.Drawing.Size(660, 688);
+                this.MinimizeBox = false;
                 this.MinimumSize = new System.Drawing.Size(660, 688);
-                this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GUI_KeyDown);
                 this.Name = "GUI";
                 this.Text = "Snake";
                 this.ResumeLayout(false);
@@ -135,7 +166,7 @@ namespace Snake
                 #endregion
 
                 // lädt / setzt high score                
-                cscore.Text = $"You have {score} points!";
+                cscore.Text = $"Your current score is {score} points!";
 
                 if (score > Settings.Default.hscore)
                 {
@@ -146,7 +177,7 @@ namespace Snake
             }
             else
             {
-                Controls.Clear();
+                this.Controls.Clear();
                 InitializeComponent();
             }
         }
@@ -157,6 +188,8 @@ namespace Snake
         private System.Windows.Forms.Label cscore;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label hscore;
+        private System.Windows.Forms.RadioButton normal;
+        private System.Windows.Forms.RadioButton blocky;
 
         #region Vom Windows Form-Designer generierter Code
 

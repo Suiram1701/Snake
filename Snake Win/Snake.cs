@@ -17,6 +17,7 @@ namespace Snake
         private int[] foodPos = new int[2];
         private int score = 0;
         private bool menu = true;
+        private bool isNormal = true;
 
         /// <summary>
         /// Feld Typen
@@ -124,6 +125,15 @@ namespace Snake
                     pos[0][0]--;
                     break;
             }
+
+            if (!isNormal)
+            {
+                if (pos[0][0] > 9) pos[0][0] = 0;
+                if (pos[0][0] < 0) pos[0][0] = 9;
+                if (pos[0][1] > 9) pos[0][1] = 0;
+                if (pos[0][1] < 0) pos[0][1] = 9;
+            }
+
             MoveTo(pos[0][0], pos[0][1], Type.Head);
         }
 
