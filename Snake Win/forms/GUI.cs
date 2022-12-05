@@ -77,7 +77,7 @@ namespace Snake
                     break;
                 case Type.Block:
                     field.GetControlFromPosition(x, y).BackgroundImage = null;
-                    field.GetControlFromPosition(x, x).BackColor = Color.Green;
+                    field.GetControlFromPosition(x, y).BackColor = Color.Green;
                     break;
                 case Type.Food:
                     field.GetControlFromPosition(x, y).BackgroundImage = null;

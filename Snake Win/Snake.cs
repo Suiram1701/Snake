@@ -13,6 +13,7 @@ namespace Snake
             new int[2] {5, 5},
             new int[2] {5, 6}
         };
+        private int[][] blocks = new int[0][];
         private bool foodExist = false;
         private int[] foodPos = new int[2];
         private int score = 0;
@@ -61,7 +62,7 @@ namespace Snake
                     }
 
                     // 250ms Verzögerung
-                    Thread.Sleep(250);
+                    Thread.Sleep(400);
                 });
             }
         }
@@ -92,8 +93,6 @@ namespace Snake
             {
                 MoveTo(p[0], p[1], Type.None);
             }
-
-            MoveTo(foodPos[0], foodPos[1], Type.Food);
         }
 
         /// <summary>
@@ -101,6 +100,18 @@ namespace Snake
         /// </summary>
         private void UpdatePos()
         {
+            // Update blocks
+            if (!isNormal)
+            {
+                foreach (int[] block in blocks)
+                {
+                    MoveTo(block[0], block[1], Type.Block);
+                }
+            }
+
+            // Update food
+            MoveTo(foodPos[0], foodPos[1], Type.Food);
+
             // Schlangenteile
             for (int i = pos.Length - 1; i > 0; i--)
             {
@@ -142,6 +153,7 @@ namespace Snake
         /// </summary>
         private void Collide()
         {
+            // Check if snake crash into snake
             for (int i = 1; i < pos.Length - 1; i++)
             {
                 if (pos[0][0] == pos[i][0] && pos[0][1] == pos[i][1])
@@ -150,13 +162,30 @@ namespace Snake
                 }
             }
 
+            // Check if snake crash into block
+            if (!isNormal)
+                foreach (int[] block in blocks)
+                {
+                    if (block[0] == pos[0][0] && block[1] == pos[0][1]) Reset();
+                }
+
+            // Check if snake at food
             if (pos[0][0] == foodPos[0] && pos[0][1] == foodPos[1])
             {
+                // Points
                 score++;
                 foodExist = false;
 
+                // New Snake Part
                 Array.Resize(ref pos, pos.Length + 1);
                 pos[pos.Length - 1] = new int[2] { pos[pos.Length - 2][0], pos[pos.Length - 2][1] };
+
+                // Spawn block if blocky mode on
+                if (!isNormal)
+                {
+                    Array.Resize(ref blocks, blocks.Length + 1);
+                    blocks[blocks.Length - 1] = new int[2] { foodPos[0], foodPos[1] };
+                }
             }
         }
 
